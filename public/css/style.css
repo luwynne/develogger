@@ -1,0 +1,168 @@
+#header{
+    text-align: center!important;
+}
+
+.page-title{
+    display: inline;
+}
+
+body{
+    background-color: white;
+}
+
+.nav-link{
+    font-size: 30px;
+    color:black;
+    display: inline!important;
+}
+
+.navbar-laravel {
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.navbar-expand-lg{
+    position: absolute;
+    top: 1vh;
+    left: 41vw;
+}
+
+.content-holder{
+    /* text-align: center; */
+    padding: 50px;
+}
+
+.client-pm{
+    padding-left: 50px;
+}
+
+.client-name{
+    padding-left: 20px;
+}
+
+th{
+    font-size: 17px;
+    padding-right: 15px;
+    background-color: #F3D000;
+}
+
+.fas{
+    font-size: 16px;
+    color: black;
+    background-color: #F3D000;
+    border-radius: 50%;
+    border: none!important;
+    padding: 5px;  
+    transition: all 0.3s;
+}
+
+.fas:hover{
+    opacity: 0.8;
+}
+
+table{
+    margin:0 auto;
+}
+
+.tr-table{
+    border-bottom:1px solid black;
+    line-height: 40px;
+}
+
+tbody{
+    text-align: left;
+}
+
+td{
+    vertical-align: middle;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.add{
+    text-align: center;
+}
+
+#filter {
+    margin: 0 auto;
+    text-align: center;
+    width: 40%;
+    border: 1px solid grey;
+    margin-top: 60px;
+    display: inline;
+    
+}
+
+.form-control{
+    border-radius: 0%;
+}
+
+.form-group {
+    text-align: center;
+}
+
+.jobs-page{
+    font-size: 22px!important;
+}
+
+
+.close-btn:hover{
+    opacity: 1.0!important;
+}
+
+.close-btn:hover{
+    opacity: 1.0!important;
+}
+
+.modal-content {
+    border-radius: 0;
+    text-align: left;
+    
+}
+
+#button-content{
+    font-weight: 400!important;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+    background-color: #F3D000;
+    color:black;
+  }
+
+  .btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    font-size: 15px;
+    line-height: 1.33;
+    border-radius: 35px;
+  }
+
+
+  button:disabled,
+  button[disabled]{
+  border: 1px solid #999999;
+  background-color: white!important;
+  border-color: #F3D000;
+}
+
+.router-link-active{
+    background-color: #F3D000;
+    border-radius: 20px;
+}
+
+a{
+    color: black!important;
+}
+
+ 
+
+
+
+
