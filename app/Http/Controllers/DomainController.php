@@ -3,83 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Domain;
+use App\Log;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DomainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    
+    public function index(){
+
+        return response(Domain::all()->jsonSerialize(), Response::HTTP_OK);
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function addNewDomainLog(Request $request){
+
+        $log = new Log();
+        
+        $log->domain_id = $request->domain_id;
+        $log->user = Auth::user()->name;
+        $log->title = $request->title;
+        $log->type = $request->type;
+        $log->description = $request->description;
+
+        $log->save();
+        return response($log->jsonSerialize(),Response::HTTP_CREATED);
+
+
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   
+    // public function create()
+    // {
+        
+    // }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Domain $domain)
-    {
-        //
-    }
+   
+    // public function store(Request $request)
+    // {
+        
+    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Domain $domain)
-    {
-        //
-    }
+   
+    // public function show(Domain $domain)
+    // {
+        
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Domain $domain)
-    {
-        //
-    }
+   
+    // public function edit(Domain $domain)
+    // {
+        
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Domain $domain)
-    {
-        //
-    }
+    
+    // public function update(Request $request, Domain $domain)
+    // {
+        
+    // }
+
+    
+    // public function destroy(Domain $domain)
+    // {
+        
+    // }
 }

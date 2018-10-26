@@ -11,3 +11,10 @@ Route::resource('/logs','LogController',[
 ]);
 
 Route::post('/logs','LogController@store');
+
+Route::resource('/domains','DomainController',[
+    'except'=>['edit','show','store']
+]);
+
+Route::post('/domains','DomainController@addNewDomainLog');
+
