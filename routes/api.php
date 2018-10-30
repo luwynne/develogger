@@ -18,3 +18,5 @@ Route::resource('/domains','DomainController',[
 
 Route::post('/domains','DomainController@addNewDomainLog');
 
+Route::get('/domain-logs/{id}','DomainController@getLogsDomain');
+

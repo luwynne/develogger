@@ -14,14 +14,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="domain in domains" :key="domain.id" :domain="domain" class="tr-table">
-                        <td class="client-name">{{ domain.url }}</td>
+                    <tr v-for="domain in domains" :key="domain.id" :domain="domain" class="tr-table">     
+                        <td class="client-name" @click="openLogs(domain.id)">{{ domain.url }}</td>
                         <td class="client-pm">{{ domain.client }}</td>
-                        <td class="client-pm center"><i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter" @click="doSomethingWith(domain.id, domain.url)"></i></td>
+                        <td class="client-pm center"><i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter" @click="getDomainInfo(domain.id, domain.url)"></i></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <log-show v-if="logModalOpen" :logDomainId="logDomainId"></log-show>
     
                <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -34,11 +36,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
                         
                              <input v-model="log.title" name="title" type="text" id="title" class="form-control" placeholder="Log Title">
                             
-                            <input v-model="log.domain_id" type="hidden">
+                             <input v-model="log.domain_id" type="hidden">
 
                             <br>
 
@@ -76,9 +77,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
-                
-        
+            </div>           
 
     </div>
 </template>
@@ -86,6 +85,7 @@
 <script>
 
 import axios from 'axios';
+import Show from './Show.vue'
 
     export default {
 
@@ -93,15 +93,18 @@ import axios from 'axios';
 
         data(){
             return {
+                logModalOpen: false,
+                logDomainId:'',
                 checked:false,
                 domainSendId: '',
                 domainSendName: '',
                 domains: [],
                 domain: {id:'', url:'', client: ''},
                 log: {domain_id: this.domainSendId, title: '', type: '', description: ''},
-                errors:{}
+                errors:{},
             }
         },
+
 
         methods:{
 
@@ -109,6 +112,7 @@ import axios from 'axios';
                 window.axios.get('/develogger-app/public/api/domains').then(({data})=>{
                     data.forEach(domain =>{
                         this.domains.push(domain)
+                        
                     });
                 });
             },
@@ -124,7 +128,6 @@ import axios from 'axios';
                 if(this.log.title.length > 0 && this.log.type.length > 0 && this.log.description.length > 0){
 
                     window.axios.post('/develogger-app/public/api/domains',this.log).then((response) => {
-                        // this.logs.push(response.data)
                         this.log.domain_id = '';
                         this.log.title = '';
                         this.log.type = '';
@@ -136,10 +139,16 @@ import axios from 'axios';
                 }
             },
 
-            doSomethingWith(item1, item2) {
+            getDomainInfo(item1, item2) {
                 this.domainSendId = item1;
                 this.domainSendName = item2;
+            },
+
+            openLogs(id){
+                this.logDomainId = id;
+                this.logModalOpen = true;
             }
+
             
         },
 
@@ -148,9 +157,15 @@ import axios from 'axios';
         },
 
         computed: {
+
             isComplete () {
                 return this.log.title && this.log.type && this.log.description;
-            }
+            },
+ 
+        },
+
+        components:{
+            'log-show': Show
         }
   
         

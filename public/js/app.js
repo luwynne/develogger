@@ -1902,7 +1902,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(172)("./" + name);
+                __webpack_require__(175)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4921,110 +4921,6 @@ module.exports = __webpack_require__(146);
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(149);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(11);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -5131,6 +5027,110 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(1);
+var normalizeHeaderName = __webpack_require__(149);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(11);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(11);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
 /* 6 */
@@ -29501,11 +29501,11 @@ module.exports = Vue;
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(169)
 /* template */
-var __vue_template__ = __webpack_require__(170)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -29548,11 +29548,11 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
-var __vue_script__ = __webpack_require__(171)
+var __vue_script__ = __webpack_require__(174)
 /* template */
-var __vue_template__ = __webpack_require__(173)
+var __vue_template__ = __webpack_require__(176)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -41440,7 +41440,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(142);
-module.exports = __webpack_require__(175);
+module.exports = __webpack_require__(178);
 
 
 /***/ }),
@@ -62611,7 +62611,7 @@ if (token) {
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(9);
 var Axios = __webpack_require__(148);
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 
 /**
  * Create an instance of Axios
@@ -62694,7 +62694,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 var utils = __webpack_require__(1);
 var InterceptorManager = __webpack_require__(157);
 var dispatchRequest = __webpack_require__(158);
@@ -63233,7 +63233,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(159);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(4);
+var defaults = __webpack_require__(5);
 var isAbsoluteURL = __webpack_require__(160);
 var combineURLs = __webpack_require__(161);
 
@@ -66381,11 +66381,11 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(5)
+var normalizeComponent = __webpack_require__(4)
 /* script */
 var __vue_script__ = __webpack_require__(168)
 /* template */
-var __vue_template__ = __webpack_require__(174)
+var __vue_template__ = __webpack_require__(177)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -66466,6 +66466,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Show_vue__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Show_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Show_vue__);
 //
 //
 //
@@ -66550,7 +66552,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
+
 
 
 
@@ -66561,6 +66563,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
+            logModalOpen: false,
+            logDomainId: '',
             checked: false,
             domainSendId: '',
             domainSendName: '',
@@ -66595,7 +66599,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.log.title.length > 0 && this.log.type.length > 0 && this.log.description.length > 0) {
 
                 window.axios.post('/develogger-app/public/api/domains', this.log).then(function (response) {
-                    // this.logs.push(response.data)
                     _this2.log.domain_id = '';
                     _this2.log.title = '';
                     _this2.log.type = '';
@@ -66606,9 +66609,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }
         },
-        doSomethingWith: function doSomethingWith(item1, item2) {
+        getDomainInfo: function getDomainInfo(item1, item2) {
             this.domainSendId = item1;
             this.domainSendName = item2;
+        },
+        openLogs: function openLogs(id) {
+            this.logDomainId = id;
+            this.logModalOpen = true;
         }
     },
 
@@ -66621,6 +66628,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         isComplete: function isComplete() {
             return this.log.title && this.log.type && this.log.description;
         }
+    },
+
+    components: {
+        'log-show': __WEBPACK_IMPORTED_MODULE_1__Show_vue___default.a
     }
 
 });
@@ -66629,324 +66640,485 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(171)
+/* template */
+var __vue_template__ = __webpack_require__(172)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Show.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e124e930", Component.options)
+  } else {
+    hotAPI.reload("data-v-e124e930", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 171 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	name: "Show",
+	props: ['logDomainId'],
+
+	data: function data() {
+		return {
+			logs: [],
+			log: { domain_id: '', user: '', title: '', type: '', description: '' }
+		};
+	},
+
+
+	methods: {
+		getLogsDomainList: function getLogsDomainList() {
+			var _this = this;
+
+			window.axios.get('/develogger-app/public/api/domain-logs/' + this.logDomainId).then(function (_ref) {
+				var data = _ref.data;
+
+				data.forEach(function (log) {
+					_this.logs.push(log);
+				});
+			});
+		}
+	},
+
+	created: function created() {
+		this.getLogsDomainList();
+	}
+});
+
+/***/ }),
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "row content-holder" }, [
-      _c("table", [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.domains, function(domain) {
-            return _c(
-              "tr",
-              {
-                key: domain.id,
-                staticClass: "tr-table",
-                attrs: { domain: domain }
-              },
-              [
-                _c("td", { staticClass: "client-name" }, [
-                  _vm._v(_vm._s(domain.url))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "client-pm" }, [
-                  _vm._v(_vm._s(domain.client))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "client-pm center" }, [
-                  _c("i", {
-                    staticClass: "fas fa-plus jobs-page",
-                    attrs: {
-                      "data-toggle": "modal",
-                      "data-target": "#exampleModalCenter"
+  return _c(
+    "div",
+    { staticClass: "container openLeft" },
+    [
+      _c("p", [_vm._v(_vm._s(_vm.logDomainId))]),
+      _vm._v(" "),
+      _vm._l(_vm.logs, function(log) {
+        return _c("div", { key: log.id, attrs: { log: log } }, [
+          _c("h1", [_vm._v(_vm._s(log.title))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(log.description))]),
+          _vm._v(" "),
+          _c("br"),
+          _c("br")
+        ])
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e124e930", module.exports)
+  }
+}
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "row content-holder" }, [
+        _c("table", [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.domains, function(domain) {
+              return _c(
+                "tr",
+                {
+                  key: domain.id,
+                  staticClass: "tr-table",
+                  attrs: { domain: domain }
+                },
+                [
+                  _c(
+                    "td",
+                    {
+                      staticClass: "client-name",
+                      on: {
+                        click: function($event) {
+                          _vm.openLogs(domain.id)
+                        }
+                      }
                     },
-                    on: {
-                      click: function($event) {
-                        _vm.doSomethingWith(domain.id, domain.url)
+                    [_vm._v(_vm._s(domain.url))]
+                  ),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "client-pm" }, [
+                    _vm._v(_vm._s(domain.client))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "client-pm center" }, [
+                    _c("i", {
+                      staticClass: "fas fa-plus jobs-page",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#exampleModalCenter"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.getDomainInfo(domain.id, domain.url)
+                        }
                       }
-                    }
-                  })
-                ])
-              ]
-            )
-          })
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "exampleModalCenter",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "exampleModalCenterTitle",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-dialog-centered",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLongTitle" }
-                  },
-                  [
-                    _vm._v("Create new Log for "),
-                    _c("br"),
-                    _vm._v(_vm._s(_vm.domainSendName))
-                  ]
-                ),
-                _vm._v(" "),
-                _vm._m(2)
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("input", {
-                  directives: [
+                    })
+                  ])
+                ]
+              )
+            })
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.logModalOpen
+        ? _c("log-show", { attrs: { logDomainId: _vm.logDomainId } })
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "exampleModalCenter",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "exampleModalCenterTitle",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "modal-dialog modal-dialog-centered",
+              attrs: { role: "document" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.log.title,
-                      expression: "log.title"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    name: "title",
-                    type: "text",
-                    id: "title",
-                    placeholder: "Log Title"
-                  },
-                  domProps: { value: _vm.log.title },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.log, "title", $event.target.value)
-                    }
-                  }
-                }),
+                      staticClass: "modal-title",
+                      attrs: { id: "exampleModalLongTitle" }
+                    },
+                    [
+                      _vm._v("Create new Log for "),
+                      _c("br"),
+                      _vm._v(_vm._s(_vm.domainSendName))
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.log.domain_id,
-                      expression: "log.domain_id"
-                    }
-                  ],
-                  attrs: { type: "hidden" },
-                  domProps: { value: _vm.log.domain_id },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.log, "domain_id", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.log.type,
-                        expression: "log.type"
+                        value: _vm.log.title,
+                        expression: "log.title"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { id: "type", name: "type" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.log,
-                          "type",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("br"),
-                    _vm._v(" "),
-                    _c(
-                      "option",
-                      { attrs: { value: "", disabled: "", selected: "" } },
-                      [_vm._v("Type")]
-                    ),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Client Update")]),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Dev Update")]),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Bug")]),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Style Fix")])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  { staticClass: "left", attrs: { for: "description" } },
-                  [_vm._v("Log Description:")]
-                ),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.log.description,
-                      expression: "log.description"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { rows: "5", id: "description", name: "description" },
-                  domProps: { value: _vm.log.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.log, "description", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("div", { staticClass: "left" }, [
-                  _c("input", {
                     attrs: {
-                      type: "checkbox",
-                      name: "tell-everyone",
-                      id: "tell-everyone"
+                      name: "title",
+                      type: "text",
+                      id: "title",
+                      placeholder: "Log Title"
+                    },
+                    domProps: { value: _vm.log.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.log, "title", $event.target.value)
+                      }
                     }
                   }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "description" } }, [
-                    _vm._v("Tell Everyone?")
-                  ]),
-                  _vm._v(" "),
-                  _c("br"),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.checked,
-                        expression: "checked"
+                        value: _vm.log.domain_id,
+                        expression: "log.domain_id"
                       }
                     ],
-                    attrs: {
-                      type: "checkbox",
-                      name: "status",
-                      id: "status",
-                      value: "checked"
-                    },
-                    domProps: {
-                      checked: Array.isArray(_vm.checked)
-                        ? _vm._i(_vm.checked, "checked") > -1
-                        : _vm.checked
-                    },
+                    attrs: { type: "hidden" },
+                    domProps: { value: _vm.log.domain_id },
                     on: {
-                      change: function($event) {
-                        var $$a = _vm.checked,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = "checked",
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 && (_vm.checked = $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              (_vm.checked = $$a
-                                .slice(0, $$i)
-                                .concat($$a.slice($$i + 1)))
-                          }
-                        } else {
-                          _vm.checked = $$c
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
+                        _vm.$set(_vm.log, "domain_id", $event.target.value)
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("label", { attrs: { for: "checked" } }, [
-                    _vm._v("Resolved and Tested?")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-circle btn-xl",
-                    attrs: {
-                      disabled: !_vm.checked || !_vm.isComplete,
-                      id: "log-it",
-                      type: "button",
-                      "data-dismiss": "modal"
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.log.type,
+                          expression: "log.type"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "type", name: "type" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.log,
+                            "type",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
                     },
-                    on: { click: _vm.save }
-                  },
-                  [
-                    _vm.checked && _vm.isComplete
-                      ? _c("span", { attrs: { id: "button-content" } }, [
-                          _c("b", [_vm._v("LOG IT")])
-                        ])
-                      : _c("span", { attrs: { id: "button-content" } }, [
-                          _c("b", [_vm._v("FIX IT")])
-                        ])
-                  ]
-                )
+                    [
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", selected: "" } },
+                        [_vm._v("Type")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Client Update")]),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Dev Update")]),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Bug")]),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Style Fix")])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "left", attrs: { for: "description" } },
+                    [_vm._v("Log Description:")]
+                  ),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.log.description,
+                        expression: "log.description"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      rows: "5",
+                      id: "description",
+                      name: "description"
+                    },
+                    domProps: { value: _vm.log.description },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.log, "description", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "left" }, [
+                    _c("input", {
+                      attrs: {
+                        type: "checkbox",
+                        name: "tell-everyone",
+                        id: "tell-everyone"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "description" } }, [
+                      _vm._v("Tell Everyone?")
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.checked,
+                          expression: "checked"
+                        }
+                      ],
+                      attrs: {
+                        type: "checkbox",
+                        name: "status",
+                        id: "status",
+                        value: "checked"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.checked)
+                          ? _vm._i(_vm.checked, "checked") > -1
+                          : _vm.checked
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.checked,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = "checked",
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.checked = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checked = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.checked = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "checked" } }, [
+                      _vm._v("Resolved and Tested?")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-circle btn-xl",
+                      attrs: {
+                        disabled: !_vm.checked || !_vm.isComplete,
+                        id: "log-it",
+                        type: "button",
+                        "data-dismiss": "modal"
+                      },
+                      on: { click: _vm.save }
+                    },
+                    [
+                      _vm.checked && _vm.isComplete
+                        ? _c("span", { attrs: { id: "button-content" } }, [
+                            _c("b", [_vm._v("LOG IT")])
+                          ])
+                        : _c("span", { attrs: { id: "button-content" } }, [
+                            _c("b", [_vm._v("FIX IT")])
+                          ])
+                    ]
+                  )
+                ])
               ])
-            ])
-          ]
-        )
-      ]
-    )
-  ])
+            ]
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -67002,7 +67174,7 @@ if (false) {
 }
 
 /***/ }),
-/* 171 */
+/* 174 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67175,7 +67347,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 172 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -67440,10 +67612,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 172;
+webpackContext.id = 175;
 
 /***/ }),
-/* 173 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -67875,7 +68047,7 @@ if (false) {
 }
 
 /***/ }),
-/* 174 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -67928,7 +68100,7 @@ if (false) {
 }
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

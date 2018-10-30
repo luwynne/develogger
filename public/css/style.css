@@ -46,6 +46,36 @@ th{
     background-color: #F3D000;
 }
 
+.title-list{
+    font-size: 17px;
+    margin: 0 auto;
+    background-color: #F3D000;
+    padding: 5px;
+}
+
+.title-list-element{
+    display: inline;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.inner-list-element{
+    display: inline;
+}
+
+.url{
+    float: left;
+}
+
+.icon{
+    float: right!important;
+}
+
+.inner-list{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .fas{
     font-size: 16px;
     color: black;
@@ -187,7 +217,24 @@ a{
     width: 80%;
 }
 
+.fas{
+    cursor: pointer;
+}
+
+.log-row{
+    display: block;
+}
+
  
+.openLeft{
+    width: 0%;
+    height: 100vh;
+    background-color: #fefefe;
+    z-index: 100;
+    top: -8px;
+    position: absolute;
+}
+
 
 
 

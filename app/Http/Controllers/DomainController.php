@@ -35,38 +35,10 @@ class DomainController extends Controller
     }
 
    
-    // public function create()
-    // {
-        
-    // }
+    public function getLogsDomain($id){
 
-   
-    // public function store(Request $request)
-    // {
-        
-    // }
-
-   
-    // public function show(Domain $domain)
-    // {
-        
-    // }
-
-   
-    // public function edit(Domain $domain)
-    // {
-        
-    // }
-
-    
-    // public function update(Request $request, Domain $domain)
-    // {
-        
-    // }
-
-    
-    // public function destroy(Domain $domain)
-    // {
-        
-    // }
+        $log = new Log();
+        $logs = $log::where('domain_id', $id)->get();
+        return response($logs->jsonSerialize(),Response::HTTP_CREATED);
+    }
 }
