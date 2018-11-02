@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Log;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,15 @@ class LogController extends Controller
         $log->description = $request->description;
 
         $log->save();
+
+        $to = "lwynne@originate.ie, dkennedy@originate.ie, matt@originate.ie";
+        $subject = "New log created"; 
+        $message = "A new log has been created by "+$log->user;
+        $message += " on "+$log->domain_id;
+        $message += ": "+$log->title;
+    
+        mail($to, $subject, $message);
+
         return response($log->jsonSerialize(),Response::HTTP_CREATED);
 
         
