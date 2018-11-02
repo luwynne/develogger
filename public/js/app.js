@@ -68894,11 +68894,32 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "form-group" }, [
+        _c("br"),
+        _vm._v(" "),
+        _c("i", {
+          staticClass: "fas fa-plus jobs-page",
+          attrs: {
+            "data-toggle": "modal",
+            "data-target": "#exampleModalCenter"
+          }
+        }),
+        _vm._v(" "),
+        _vm.isLoading
+          ? _c("div", { staticClass: "loading-image" }, [
+              _c("img", {
+                attrs: {
+                  src: "/develogger-app/public/img/dev-tick.gif",
+                  alt: ""
+                }
+              })
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row content-holder" }, [
         _c("table", { staticClass: "table" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "tbody",
@@ -68982,7 +69003,7 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("input", {
@@ -69294,25 +69315,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("br"),
-      _vm._v(" "),
-      _c("i", {
-        staticClass: "fas fa-plus jobs-page",
-        attrs: { "data-toggle": "modal", "data-target": "#exampleModalCenter" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "loading-image" }, [
-        _c("img", {
-          attrs: { src: "/develogger-app/public/img/dev-tick.gif", alt: "" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

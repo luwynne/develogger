@@ -9,7 +9,7 @@
                 <!-- <input type="text" class="form-control" id="filter" placeholder="Filter the Logs"> -->
                 <br>
                 <i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter"></i>
-                <div  class="loading-image">
+                <div v-if="isLoading" class="loading-image">
                     <img src="/develogger-app/public/img/dev-tick.gif" alt="">
                 </div>
         </div>
