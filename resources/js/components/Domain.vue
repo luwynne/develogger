@@ -1,21 +1,25 @@
 <template>
     <div class="container">
         <div class="form-group">
-                <input type="text" class="form-control" id="filter" placeholder="Filter the Domains">  
+                <!-- <input type="text" class="form-control" id="filter" placeholder="Filter the Domains">   -->
+                <div v-if="isLoading" class="loading-image">
+                    <img src="/develogger-app/public/img/dev-tick.gif" alt="">
+                </div>
+                
         </div>
 
-        <div class="row content-holder">
-            <table>
+        <div class="col-md-12 row content-holder">
+            <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="left-align">
                         <th class="client-name">Domain</th>
                         <th class="client-pm">Client</th>
-                        <th class="client-pm">Add Log on Domain</th>
+                        <th class="client-pm" style="text-align:center">Add Log</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="domain in domains" :key="domain.id" :domain="domain" class="tr-table">     
-                        <td class="client-name" @click="openLogs(domain.id)">{{ domain.url }}</td>
+                        <td class="client-name" @click="openLogs(domain.id, domain.url, domain.client)"><span class="domainClick">{{ domain.url }}</span></td>
                         <td class="client-pm">{{ domain.client }}</td>
                         <td class="client-pm center"><i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter" @click="getDomainInfo(domain.id, domain.url)"></i></td>
                     </tr>
@@ -23,7 +27,7 @@
             </table>
         </div>
 
-        <log-show v-if="logModalOpen" :logDomainId="logDomainId"></log-show>
+        <log-show v-if="logModalOpen" :logDomainId="logDomainId" :logDomainName="logDomainName" :logDomainClient="logDomainClient" @closeRequest='close'></log-show>
     
                <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -86,6 +90,10 @@
 
 import axios from 'axios';
 import Show from './Show.vue'
+// Import component
+    import Loading from 'vue-loading-overlay';
+    // Import stylesheet
+    import 'vue-loading-overlay/dist/vue-loading.css';
 
     export default {
 
@@ -93,8 +101,11 @@ import Show from './Show.vue'
 
         data(){
             return {
+                isLoading:'',
                 logModalOpen: false,
                 logDomainId:'',
+                logDomainName:'',
+                logDomainClient:'',
                 checked:false,
                 domainSendId: '',
                 domainSendName: '',
@@ -109,6 +120,7 @@ import Show from './Show.vue'
         methods:{
 
             getDomains(){
+                
                 window.axios.get('/develogger-app/public/api/domains').then(({data})=>{
                     data.forEach(domain =>{
                         this.domains.push(domain)
@@ -124,6 +136,7 @@ import Show from './Show.vue'
             },
 
             save(){
+                this.isLoading = true;
                 this.log.domain_id = this.domainSendId;
                 if(this.log.title.length > 0 && this.log.type.length > 0 && this.log.description.length > 0){
 
@@ -133,10 +146,20 @@ import Show from './Show.vue'
                         this.log.type = '';
                         this.log.description = '';
                         this.checked = false;
+
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 800);
                     
-                    }).catch((error) => this.errors = error.response.data.errors)
+                    }).catch((error) => this.errors = error.response.data.errors);
 
                 }
+            },
+
+            isLoadingFalse(){
+
+                this.isLoading = false;
+
             },
 
             getDomainInfo(item1, item2) {
@@ -144,9 +167,15 @@ import Show from './Show.vue'
                 this.domainSendName = item2;
             },
 
-            openLogs(id){
+            openLogs(id, name, client){
                 this.logDomainId = id;
+                this.logDomainName = name;
+                this.logDomainClient = client
                 this.logModalOpen = true;
+            },
+
+            close(){
+                this.logModalOpen = false;
             }
 
             
@@ -165,7 +194,7 @@ import Show from './Show.vue'
         },
 
         components:{
-            'log-show': Show
+            'log-show': Show,
         }
   
         

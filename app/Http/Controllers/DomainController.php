@@ -38,7 +38,7 @@ class DomainController extends Controller
     public function getLogsDomain($id){
 
         $log = new Log();
-        $logs = $log::where('domain_id', $id)->get();
+        $logs = $log::where('domain_id', $id)->orderBy('id', 'DESC')->get();
         return response($logs->jsonSerialize(),Response::HTTP_CREATED);
     }
 }

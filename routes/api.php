@@ -20,3 +20,7 @@ Route::post('/domains','DomainController@addNewDomainLog');
 
 Route::get('/domain-logs/{id}','DomainController@getLogsDomain');
 
+Route::delete('/logs/{id}','LogController@destroy');
+
+Route::patch('/logs/{id}','LogController@update');
+

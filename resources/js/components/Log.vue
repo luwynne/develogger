@@ -1,25 +1,37 @@
 <template>
     <div class="container">
 
+        <log-show-detail v-if="logModalOpen" :logUser="logUser" :logTitle="logTitle" :logType="logType" :logDescription="logDescription" :logDate="logDate" @closeRequest='close'> </log-show-detail>
+
+        <log-edit v-if="editModalOpen" :logId="logId" :logUser="logUser" :logTitle="logTitle" :logType="logType" :logDescription="logDescription" :logDate="logDate" @closeRequest='close'></log-edit>
+
         <div class="form-group">
-                <input type="text" class="form-control" id="filter" placeholder="Filter the Logs">
+                <!-- <input type="text" class="form-control" id="filter" placeholder="Filter the Logs"> -->
+                <br>
                 <i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                <div  class="loading-image">
+                    <img src="/develogger-app/public/img/dev-tick.gif" alt="">
+                </div>
         </div>
 
         <div class="row content-holder">
-            <table>
+            <table class="table">
                 <thead>
-                    <tr>
-                        <th class="client-name">Log</th>
-                        <th class="client-pm">User</th>
-                        <th class="client-pm">Date</th>
+                    <tr class="left-align">
+                        <th class="">Log</th>
+                        <th class="">User</th>
+                        <th class="center-align" style="text-align:right">Date</th>
+
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="log in logs" :key="log.id" :log="log" class="tr-table">
-                        <td class="client-name">{{ log.title }}</td>
-                        <td class="client-pm">{{ log.user }}</td>
-                        <td class="client-pm">{{moment(log.created_at).fromNow()}}</td>
+                    <tr v-for="log in logs" :key="log.id" :log="log" @deleteLog="deleteLog" class="tr-table">
+                        <td class="client-name" @click="openLogs(log.id,log.user,log.title,log.type,log.description,log.created_at)">{{ log.title }}</td>
+                        <td class="" >{{ log.user }}</td>
+                        <td class="client-pm" style="text-align:right">{{moment(log.created_at).fromNow()}}</td>
+                        <!-- <td @click="openEdit(log.id,log.user,log.title,log.type,log.description,log.created_at)"><i class="fas fa-edit"></i></td> -->
+                        <td @click="deleteLog(key,log.id)"><i class="fas fa-trash-alt"></i></td>
                     </tr>
                 </tbody>
             </table>
@@ -97,18 +109,33 @@
 
 import axios from 'axios';
 import moment from 'moment';
+import ShowDetail from './ShowDetail.vue';
+import EditLog from './EditLog.vue';
 
     export default {
 
+        key:'',
+        
         name:'Log',
 
         data(){
             return {
+                logModalOpen: false,
+                editModalOpen: false,
+                isLoading:'',
                 checked:false,
                 logs: [],
-                log: {domain_id:'', title: '', type: '', description: ''},
+                log: {id:'', domain_id:'', title: '', type: '', description: ''},
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                errors:{}
+                errors:{},
+
+                //passing those variables to ShowDetails component
+                logId:'',
+                logUser:'',
+                logTitle:'',
+                logType:'',
+                logDescription:'',
+                logDate:'',
             }
         },
 
@@ -125,7 +152,7 @@ import moment from 'moment';
             moment,
 
             save(){
-                
+                this.isLoading = true;
                 if(this.log.title.length > 0 && this.log.domain_id.length > 0 && this.log.type.length > 0 && this.log.description.length > 0){
 
                     window.axios.post('/develogger-app/public/api/logs',this.log).then((response) => {
@@ -135,12 +162,61 @@ import moment from 'moment';
                         this.log.type = '';
                         this.log.description = '';
                         this.checked = false;
+
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 800);
                     
                     }).catch((error) => this.errors = error.response.data.errors)
 
                 }
                 
             },
+
+            openLogs(id,user,title,type,description,date){
+                this.logId = id;
+                this.logUser = user;
+                this.logTitle = title;
+                this.logType = type;
+                this.logDescription = description;
+                this.logDate = date;
+                this.logModalOpen = true;
+            },
+
+            openEdit(id,user,title,type,description,date){
+                this.logId = id;
+                this.logUser = user;
+                this.logTitle = title;
+                this.logType = type;
+                this.logDescription = description;
+                this.logDate = date;
+                this.editModalOpen = true;
+            },
+
+            close(){
+                this.logModalOpen = false;
+                this.editModalOpen = false;
+            },
+
+            deleteLog(key,id){
+
+                if(confirm("Are you sure you want to delete?")){
+                    this.isLoading = true;
+
+                    window.axios.delete(`/develogger-app/public/api/logs/${id}`,this.log).then((response) => {
+                            this.logs.push(response.data)
+                            this.logs.splice(key,1);
+
+                            setTimeout(() => {
+                                this.isLoading = false;
+                            }, 800);
+
+                            this.logId = '';
+                        
+                        }).catch((error) => this.errors = error.response.data.errors)
+                }
+                    
+            }
             
         },
 
@@ -152,6 +228,11 @@ import moment from 'moment';
             isComplete () {
                 return this.log.title && this.log.domain_id && this.log.type && this.log.description;
             }
+        },
+
+        components:{
+            'log-show-detail': ShowDetail,
+            'log-edit': EditLog,
         }
         
     }

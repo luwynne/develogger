@@ -24,6 +24,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" >
+    
 </head>
 <body>
     <div id="app">
@@ -81,6 +82,43 @@
         <main class="py-4">
             @yield('content')
         </main>
+
     </div>
+
+
+    <!-- Footer -->
+<footer class="page-footer font-small">
+
+
+
+  <!-- Footer Links -->
+  <div class="container">
+
+    <!-- Footer links -->
+    <div class="row text-center text-md-left ">
+
+      <!-- Grid column -->
+      <div class="col-md-10 col-lg-10 col-xl-10 ">
+      <i class="fas fa-question"></i>
+      </div>
+      <!-- Grid column -->
+
+
+      <!-- Grid column -->
+      <div class="col-md-2 col-lg-2 col-xl-2 ">
+        <img id="logo" src="{{ asset('img/ORIGINATE-LOGO.png') }}" alt="">
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Footer links -->
+
+  </div>
+  <!-- Footer Links -->
+
+</footer>
+<!-- Footer -->
+
+
 </body>
 </html>

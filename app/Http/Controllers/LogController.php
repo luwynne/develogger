@@ -12,7 +12,9 @@ class LogController extends Controller
     
     public function index(){
 
-        return response(Log::all()->jsonSerialize(), Response::HTTP_OK);
+        $log = Log::orderBy('id', 'DESC')->get();
+
+        return response($log->jsonSerialize(), Response::HTTP_OK);
         
     }
 
@@ -32,27 +34,23 @@ class LogController extends Controller
         
     }
 
+
     
-    public function show(Log $log)
-    {
-        
+    public function update($id, Request $request){
+
+        $log = Log::find($request->id);
+        $log->title = $request->logTitle;
+        $log->type = $request->logType;
+        $log->description = $request->logDescription;
+
+        $log->save();
+
     }
 
     
-    public function edit(Log $log)
-    {
+    public function destroy($id){
         
-    }
+        Log::where('id',$id)->delete();
 
-    
-    public function update(Request $request, Log $log)
-    {
-        
-    }
-
-    
-    public function destroy(Log $log)
-    {
-        
     }
 }

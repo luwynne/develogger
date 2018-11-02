@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Develogger
+                    <img src="{{ asset('img/dev-logout.gif') }}" alt="">
                 </div>
 
             </div>

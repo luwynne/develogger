@@ -1,3 +1,7 @@
+body{
+    height: 100vh;
+}
+
 #header{
     text-align: center!important;
 }
@@ -82,7 +86,7 @@ th{
     background-color: #F3D000;
     border-radius: 50%;
     border: none!important;
-    padding: 5px;  
+    padding: 7px;  
     transition: all 0.3s;
 }
 
@@ -132,7 +136,7 @@ td{
 }
 
 .jobs-page{
-    font-size: 22px!important;
+    font-size: 15px!important;
 }
 
 
@@ -227,12 +231,166 @@ a{
 
  
 .openLeft{
-    width: 0%;
-    height: 100vh;
+    /* width: 0%; */
+    height: 80vh!important;
     background-color: #fefefe;
     z-index: 100;
     top: -8px;
     position: absolute;
+}
+
+.domainClick{
+    cursor: pointer;
+}
+
+.row-header{
+    background-color: #F3D000;
+    height: 200px;
+    text-align: center;
+    
+}
+
+.closebutton{
+    cursor: pointer;
+    position: absolute;
+    top: 3%;
+    right: 2%;
+    padding: 12px 16px;
+    transform: translate(0%, -50%);
+    font-weight: 300!important;
+    font-size: 50px!important;
+  }
+
+  .row-body{
+      height: 190px;
+      margin-bottom:10px;
+      margin-top:10px;
+      text-align: left;
+      background-color: #fefbd8;
+      padding: 40px;
+  }
+
+  .header-content-wrapper{
+    padding: 50px;
+  }
+
+  #logo{
+    width: 150px;
+    float: right;
+  }
+
+  .fa-question{
+      background-color: #fefefe;
+  }
+
+  footer{
+    background-color: white; 
+    position: fixed!important;
+    bottom: 0%!important;
+    padding-left: 160px;
+    padding-right: 160px;
+    margin-top: 20vh;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 50px;
+  }
+
+  .right img{
+    width: 150px;
+  }
+
+ .no-log-row{
+     padding-top: 100px;
+     padding-right: 100px;
+ }
+
+ .left-align{
+     text-align: left;
+ }
+
+ .loading-image{
+     z-index: 300;
+     position: fixed;
+     top: 35%;
+    left: 45vw;
+        margin-left: -100px;
+        margin-top: -93px;
+        border-radius: 1em;
+ }
+
+tr{
+    -webkit-transition: all 0.5s; /* Safari */
+    transition: all 0.5s;
+    cursor: pointer;
+}
+ tr:hover{
+    background-color: whitesmoke;
+ }
+
+ .log-detail-window{
+     width: 40vw;
+     height: 40vh;
+     background-color: white;
+     z-index: 400;
+     position: absolute;
+     border-radius: 10px;
+     top: 19%;
+    left: 30%;
+    padding: 30px;
+ }
+
+ .edit-detail-window {
+    width: 40vw;
+    height: 50vh;
+    background-color: white;
+    z-index: 400;
+    position: absolute;
+    border-radius: 10px;
+    top: 19%;
+    left: 30%;
+    padding: 30px;
+}
+
+ #overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 998;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  #show-detail-modal-body{
+      text-align: left;
+  }
+
+  .fa-edit, .fa-trash-alt{
+      background: none!important;
+  }
+
+  #form-check-login{
+    text-align: left;
+}
+
+
+
+/* MEDIA QUERIES */
+
+@media only screen and (min-width: 768px) {
+    .row-header{
+        width: 144%;
+        margin-left: -26%;
+    }
+    .left{
+        float:left;
+        /* position: absolute; */
+    }
+    .right{
+        float:right;
+        /* position: absolute; */
+    }
+    
 }
 
 

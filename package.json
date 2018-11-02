@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "moment": "^2.22.2",
+        "vue-loading-overlay": "^3.0.1",
         "vue-router": "^3.0.1"
     }
 }
