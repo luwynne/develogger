@@ -85,7 +85,7 @@
                             <br>
 
                             <div class="left">
-                                <input  type="checkbox" name="tell-everyone" id="tell-everyone">
+                                <input  v-model="tell" type="checkbox" name="tell-everyone" id="tell-everyone">
                                 <label for="description">Tell Everyone?</label>
                                 <br>
                                 <input v-model="checked" type="checkbox" name="status" id="status" value="checked">
@@ -114,16 +114,16 @@ import EditLog from './EditLog.vue';
 
     export default {
 
-        key:'',
-        
         name:'Log',
 
         data(){
             return {
+                key:0,
                 logModalOpen: false,
                 editModalOpen: false,
                 isLoading:'',
                 checked:false,
+                tell:false,
                 logs: [],
                 log: {id:'', domain_id:'', title: '', type: '', description: ''},
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
@@ -204,7 +204,6 @@ import EditLog from './EditLog.vue';
                     this.isLoading = true;
 
                     window.axios.delete(`/develogger-app/public/api/logs/${id}`,this.log).then((response) => {
-                            this.logs.push(response.data)
                             this.logs.splice(key,1);
 
                             setTimeout(() => {
@@ -215,6 +214,7 @@ import EditLog from './EditLog.vue';
                         
                         }).catch((error) => this.errors = error.response.data.errors)
                 }
+
                     
             }
             

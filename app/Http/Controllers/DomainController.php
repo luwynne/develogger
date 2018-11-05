@@ -30,7 +30,26 @@ class DomainController extends Controller
         $log->save();
         return response($log->jsonSerialize(),Response::HTTP_CREATED);
 
+        if($request->tell){
+            sendNotification($log->user, $log->title);
+        }
 
+
+    }
+
+
+    public function sendNotification($user, $title){
+
+        $luiz = "lwynne@originate.ie";
+        $david = "dkennedy@originate.ie";
+        $matt = "matt@originate.ie";
+        $subject = "New log created"; 
+        $message = "A new log has been created by "+ $user;
+        $message += ": "+ $title;
+    
+        mail($luiz, $subject, $message);
+        mail($david, $subject, $message);
+        mail($matt, $subject, $message);
 
     }
 

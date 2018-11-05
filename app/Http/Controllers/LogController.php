@@ -31,17 +31,30 @@ class LogController extends Controller
 
         $log->save();
 
-        $to = "lwynne@originate.ie, dkennedy@originate.ie, matt@originate.ie";
-        $subject = "New log created"; 
-        $message = "A new log has been created by "+$log->user;
-        $message += " on "+$log->domain_id;
-        $message += ": "+$log->title;
-    
-        mail($to, $subject, $message);
-
         return response($log->jsonSerialize(),Response::HTTP_CREATED);
 
+        if($request->tell){
+            sendNotification($log->user, $log->title);
+        }
+
         
+
+        
+    }
+
+    public function sendNotification($user, $title){
+
+        $luiz = "lwynne@originate.ie";
+        $david = "dkennedy@originate.ie";
+        $matt = "matt@originate.ie";
+        $subject = "New log created"; 
+        $message = "A new log has been created by "+ $user;
+        $message += ": "+ $title;
+    
+        mail($luiz, $subject, $message);
+        mail($david, $subject, $message);
+        mail($matt, $subject, $message);
+
     }
 
 

@@ -63,7 +63,7 @@
                             <br>
 
                             <div class="left">
-                                <input  type="checkbox" name="tell-everyone" id="tell-everyone">
+                                <input  v-model="tell" type="checkbox" name="tell-everyone" id="tell-everyone">
                                 <label for="description">Tell Everyone?</label>
                                 <br>
                                 <input v-model="checked" type="checkbox" name="status" id="status" value="checked">
@@ -101,6 +101,7 @@ import Show from './Show.vue'
 
         data(){
             return {
+                tell:false,
                 isLoading:'',
                 logModalOpen: false,
                 logDomainId:'',
