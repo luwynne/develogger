@@ -57,16 +57,39 @@ class LogController extends Controller
 
     }
 
+ 
+
+    public function edit($id){
+
+        return Log::find($id);
+
+    }
 
     
-    public function update($id, Request $request){
 
-        $log = Log::find($request->id);
-        $log->title = $request->logTitle;
-        $log->type = $request->logType;
-        $log->description = $request->logDescription;
 
-        $log->save();
+    
+    public function update(Request $request, $id){
+
+        $this->validate($request, [
+            'title' => 'required',
+            'type' => 'required',
+            'description' => 'required',
+        ]);
+
+        $log = Log::find($id);
+
+        if($log->count()){
+
+            $log->update($request->all());
+
+            return response()->json(['statur'=>'success','msg'=>'Post updated successfully']);
+
+        } else {
+
+            return response()->json(['statur'=>'error','msg'=>'error in updating post']);
+
+        }
 
     }
 

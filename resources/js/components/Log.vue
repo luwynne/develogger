@@ -3,7 +3,7 @@
 
         <log-show-detail v-if="logModalOpen" :logUser="logUser" :logTitle="logTitle" :logType="logType" :logDescription="logDescription" :logDate="logDate" @closeRequest='close'> </log-show-detail>
 
-        <log-edit v-if="editModalOpen" :logId="logId" :logUser="logUser" :logTitle="logTitle" :logType="logType" :logDescription="logDescription" :logDate="logDate" @closeRequest='close'></log-edit>
+        <!-- <log-edit v-if="editModalOpen" :logId="logId" :logUser="logUser" :logTitle="logTitle" :logType="logType" :logDescription="logDescription" :logDate="logDate" @closeRequest='close'></log-edit> -->
 
         <div class="form-group">
                 <!-- <input type="text" class="form-control" id="filter" placeholder="Filter the Logs"> -->
@@ -20,6 +20,7 @@
                     <tr class="left-align">
                         <th class="">Log</th>
                         <th class="">User</th>
+                        <th></th>
                         <th class="center-align" style="text-align:right">Date</th>
 
                         <th></th>
@@ -30,13 +31,13 @@
                         <td class="client-name" @click="openLogs(log.id,log.user,log.title,log.type,log.description,log.created_at)">{{ log.title }}</td>
                         <td class="" >{{ log.user }}</td>
                         <td class="client-pm" style="text-align:right">{{moment(log.created_at).fromNow()}}</td>
-                        <!-- <td @click="openEdit(log.id,log.user,log.title,log.type,log.description,log.created_at)"><i class="fas fa-edit"></i></td> -->
+                        <td><router-link v-bind:to="{name: 'EditLog', params: {id: log.id}}"><i class="fas fa-edit"></i></router-link></td>
                         <td @click="deleteLog(key,log.id)"><i class="fas fa-trash-alt"></i></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
+    
 
         <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -232,7 +233,7 @@ import EditLog from './EditLog.vue';
 
         components:{
             'log-show-detail': ShowDetail,
-            'log-edit': EditLog,
+            EditLog,
         }
         
     }

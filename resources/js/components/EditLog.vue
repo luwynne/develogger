@@ -2,37 +2,39 @@
     <div class="container">
         <div id="overlay">
             <div class="edit-detail-window">
-                <div class="modal-header">
-                        <h3 class="modal-title" id="exampleModalLongTitle">{{logTitle}}</h3>
-                        <button type="button" class="close">
-                        <i class="fas fa-times" @click="close"></i>
+               <form v-on:submit.prevent = "updatePost">   
+                    <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLongTitle">{{log.title}}</h3>
+                            <button type="button" class="close">
+                            <router-link :to="'/Log'"><i class="fas fa-times"></i></router-link>
+                            </button>
+                    </div>
+                    <div id="show-detail-modal-body" class="modal-body">
+                        <br>
+                        <label>Title:</label>
+                        <input class="form-control" type="text" v-model="log.title">
+
+                        <br>
+                        <label>Type:</label>
+                        <select v-model="log.type" class="form-control" ><br>
+                                <option value="" disabled selected>Type</option>
+                                <option>Client Update</option>
+                                <option>Dev Update</option>
+                                <option>Bug</option>
+                                <option>Style Fix</option>
+                        </select>
+
+                        <br>
+                        <label>Description:</label>
+                        <textarea class="form-control" cols="30" rows="5" v-model="log.description"></textarea>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="log-it" class="btn btn-circle btn-xl">
+                            <span><b>EDIT</b></span>
                         </button>
-                </div>
-                <div id="show-detail-modal-body" class="modal-body">
-                    <br>
-                    <label>Title:</label>
-                    <input class="form-control" type="text" v-model="logTitle">
-
-                    <br>
-                    <label>Type:</label>
-                    <select v-model="logType" class="form-control" ><br>
-                            <option value="" disabled selected>Type</option>
-                            <option>Client Update</option>
-                            <option>Dev Update</option>
-                            <option>Bug</option>
-                            <option>Style Fix</option>
-                    </select>
-
-                    <br>
-                    <label>Description:</label>
-                    <textarea class="form-control" cols="30" rows="5" v-model="logDescription"></textarea>
-                    
-                </div>
-                <div class="modal-footer">
-                    <button d="log-it" type="button" class="btn btn-circle btn-xl" @click="update(logTitle, logType, logDescription)">
-                        <span><b>EDIT</b></span>
-                    </button>
-                </div>
+                    </div>
+              </form>  
             </div>
         </div>
     </div>
@@ -41,39 +43,41 @@
 
 <script>
 
-import axios from 'axios';
+import Axios from 'axios';
+import Log from './Log.vue';
 
 export default {
 
     name:'EditLog',
 
-    props:['logId','logUser','logTitle','logType','logDescription','logDate'],
+    //props:['logId','logUser','logTitle','logType','logDescription','logDate'],
 
     data(){
         return{
-            log:{title:'',type:'',description:''},
-            errors:{}
+            log:{domain_id:'', user:'', title:'',type:'',description:''},
         }
     },
 
     methods:{
 
-        close(){
-			this.$emit('closeRequest');
-        },
-
-        update(title,type,description){
-
-            this.log.title = title;
-            this.log.type = type;
-            this.log.description - description;
-            
-            window.axios.patch(`/develogger-app/public/api/logs/${this.logId}`,this.$data.log).then((response)=> this.close())
-                    .catch((error) => this.errors = error.response.data.errors)
-
+       updatePost: function() {
+        //patch method will be handle on the update function
+            let uri = 'edit-log/'+this.$route.params.id;
+            Axios.patch(uri, this.log).then((response) => {
+                this.$router.push('/Log');
+            })
         }
 
-    }
+    },
+
+    created: function(){
+            //will get the edit function
+            let uri = 'edit-log/'+this.$route.params.id+'/edit';
+                Axios.get(uri).then((response) => {
+                this.log = response.data;
+            });
+        },
+
 }
 </script>
 

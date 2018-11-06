@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 let App = require('./components/App.vue');
 let Domain = require('./components/Domain.vue');
 let Log = require('./components/Log.vue');
+let EditLog = require('./components/EditLog.vue');
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,12 @@ const routes = [
 
     { path: '/', redirect: '/Domain' },
     {path:'/Domain',component: Domain},
-    {path:'/Log',component: Log}
+    {path:'/Log',component: Log},
+    {
+      name: 'EditLog',
+      path: '/edit-log/:id',
+      component: EditLog
+    },
 
   ];
 
@@ -25,5 +31,5 @@ const routes = [
 const app = new Vue({
     el: '#app',
     router: router,
-    components:{App,Domain,Log}
+    components:{App,Domain,Log,EditLog}
 });
