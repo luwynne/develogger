@@ -16,7 +16,7 @@
 			<p>{{ log.description }}</p>
 			<br><br>
 		</div>
-		<div v-if="logs.length < 1 || logs == undefined" class="no-log-row">
+		<div v-if="loaded" class="no-log-row">
 			<h1>No Logs for {{ logDomainName }}</h1>
 		</div>
 	</div>
@@ -31,6 +31,7 @@ export default {
 
 	data(){
 		return{
+			loaded:'',
 			logs:[],
 			log:{log_counter:1, domain_id:'', user:'', title:'', type:'', description:''},
 		}
@@ -40,9 +41,16 @@ export default {
 
 		getLogsDomainList(){
 			window.axios.get(`/develogger-app/public/api/domain-logs/${this.logDomainId}`).then(({data})=>{
+					if(data.length > 0){
+						this.loaded = false;
+					}else{
+						this.loaded = true;
+					}
+
                     data.forEach(log =>{
 						log.log_counter = this.log.log_counter++;
-                        this.logs.push(log)
+						this.logs.push(log)
+							console.log(data);	
                     });
                 });
 		},

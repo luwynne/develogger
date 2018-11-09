@@ -66611,7 +66611,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -66806,6 +66805,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	data: function data() {
 		return {
+			loaded: '',
 			logs: [],
 			log: { log_counter: 1, domain_id: '', user: '', title: '', type: '', description: '' }
 		};
@@ -66819,9 +66819,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			window.axios.get('/develogger-app/public/api/domain-logs/' + this.logDomainId).then(function (_ref) {
 				var data = _ref.data;
 
+				if (data.length > 0) {
+					_this.loaded = false;
+				} else {
+					_this.loaded = true;
+				}
+
 				data.forEach(function (log) {
 					log.log_counter = _this.log.log_counter++;
 					_this.logs.push(log);
+					console.log(data);
 				});
 			});
 		},
@@ -66890,7 +66897,7 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      _vm.logs.length < 1 || _vm.logs == undefined
+      _vm.loaded
         ? _c("div", { staticClass: "no-log-row" }, [
             _c("h1", [_vm._v("No Logs for " + _vm._s(_vm.logDomainName))])
           ])
@@ -67726,6 +67733,8 @@ var render = function() {
                       _vm._v(" "),
                       _c("option", [_vm._v("Bug")]),
                       _vm._v(" "),
+                      _c("option", [_vm._v("New Job")]),
+                      _vm._v(" "),
                       _c("option", [_vm._v("Style Fix")])
                     ]
                   ),
@@ -68065,6 +68074,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -68146,15 +68156,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.logDescription = description;
             this.logDate = date;
             this.logModalOpen = true;
-        },
-        openEdit: function openEdit(id, user, title, type, description, date) {
-            this.logId = id;
-            this.logUser = user;
-            this.logTitle = title;
-            this.logType = type;
-            this.logDescription = description;
-            this.logDate = date;
-            this.editModalOpen = true;
         },
         close: function close() {
             this.logModalOpen = false;
@@ -68541,9 +68542,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -68578,49 +68576,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { attrs: { id: "overlay" } }, [
-      _c("div", { staticClass: "log-detail-window" }, [
-        _c("div", { staticClass: "modal-header" }, [
-          _c(
-            "h5",
-            {
-              staticClass: "modal-title",
-              attrs: { id: "exampleModalLongTitle" }
-            },
-            [_vm._v(_vm._s(_vm.logTitle))]
-          ),
-          _vm._v(" "),
-          _c("button", { staticClass: "close", attrs: { type: "button" } }, [
-            _c("i", { staticClass: "fas fa-times", on: { click: _vm.close } })
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal-body",
-            attrs: { id: "show-detail-modal-body" }
-          },
-          [
-            _c("small", [
-              _vm._v(
-                "by " +
-                  _vm._s(_vm.logUser) +
-                  " " +
-                  _vm._s(_vm.moment(_vm.logDate).fromNow())
-              )
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c("p", [_vm._v("Type: " + _vm._s(_vm.logType))]),
-            _vm._v(" "),
-            _c("p", [_vm._v("Description: " + _vm._s(_vm.logDescription))])
-          ]
-        )
+  return _c("div", { staticClass: "container openLeft" }, [
+    _c("div", { staticClass: "row-header" }, [
+      _c("div", { staticClass: "header-content-wrapper" }, [
+        _c("h1", [_vm._v(_vm._s(_vm.logTitle))])
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "closebutton", on: { click: _vm.close } }, [
+        _vm._v("×")
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row-body" }, [
+      _c("p", [
+        _c("b", [
+          _vm._v(
+            "#" +
+              _vm._s(_vm.logUser) +
+              "   " +
+              _vm._s(_vm.moment(_vm.logDate).fromNow())
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Type: " + _vm._s(_vm.logType))]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Description: " + _vm._s(_vm.logDescription))])
     ])
   ])
 }
@@ -68696,8 +68677,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     name: 'EditLog',
 
-    //props:['logId','logUser','logTitle','logType','logDescription','logDate'],
-
     data: function data() {
         return {
             log: { domain_id: '', user: '', title: '', type: '', description: '' }
@@ -68768,7 +68747,7 @@ var render = function() {
                 { staticClass: "close", attrs: { type: "button" } },
                 [
                   _c("router-link", { attrs: { to: "/Log" } }, [
-                    _c("i", { staticClass: "fas fa-times" })
+                    _c("i", { staticClass: "fas inner-fas fa-times" })
                   ])
                 ],
                 1
@@ -69176,6 +69155,10 @@ var render = function() {
                         _vm._v("clayfarm.ie")
                       ]),
                       _vm._v(" "),
+                      _c("option", { attrs: { value: "12" } }, [
+                        _vm._v("develogger.originate.ie")
+                      ]),
+                      _vm._v(" "),
                       _c("option", { attrs: { value: "10" } }, [
                         _vm._v("edenplaza.ie")
                       ]),
@@ -69190,6 +69173,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("option", { attrs: { value: "3" } }, [
                         _vm._v("loulerie.ie")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "13" } }, [
+                        _vm._v("originate.ie")
                       ]),
                       _vm._v(" "),
                       _c("option", { attrs: { value: "9" } }, [
@@ -69430,8 +69417,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", {}, [_vm._v("User")]),
         _vm._v(" "),
-        _c("th"),
-        _vm._v(" "),
         _c(
           "th",
           {
@@ -69440,6 +69425,8 @@ var staticRenderFns = [
           },
           [_vm._v("Date")]
         ),
+        _vm._v(" "),
+        _c("th"),
         _vm._v(" "),
         _c("th")
       ])
@@ -69466,7 +69453,7 @@ var staticRenderFns = [
             "aria-label": "Close"
           }
         },
-        [_c("i", { staticClass: "fas fa-times" })]
+        [_c("i", { staticClass: "fas inner-fas fa-times" })]
       )
     ])
   }

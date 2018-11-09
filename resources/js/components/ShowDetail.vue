@@ -1,22 +1,19 @@
 <template>
-    <div class="container">
-        <div id="overlay">
-            <div class="log-detail-window">
-                <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">{{logTitle}}</h5>
-                        <button type="button" class="close">
-                        <i class="fas fa-times" @click="close"></i>
-                        </button>
-                </div>
-                <div id="show-detail-modal-body" class="modal-body">
-                    <small>by {{logUser}} {{moment(logDate).fromNow()}}</small>
-                    <br><br>
-                    <p>Type: {{logType}}</p>
-                    <p>Description: {{logDescription}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container openLeft">
+		
+	<div class="row-header">
+		<div class="header-content-wrapper">
+			<h1>{{logTitle}}</h1>
+		</div>
+		<span class="closebutton" @click="close">&times;</span>
+	</div>
+		
+		<div class="row-body">
+			<p><b>#{{logUser}}&nbsp;&nbsp;&nbsp;{{moment(logDate).fromNow()}}</b></p>
+			<p>Type: {{logType}}</p>
+            <p>Description: {{logDescription}}</p>
+		</div>
+	</div>
 </template>
 
 

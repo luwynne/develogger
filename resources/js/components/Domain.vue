@@ -52,6 +52,7 @@
                                 <option>Client Update</option>
                                 <option>Dev Update</option>
                                 <option>Bug</option>
+                                <option>New Job</option>
                                 <option>Style Fix</option>
                             </select>
 
@@ -75,9 +76,7 @@
                         <button :disabled="!checked || !isComplete" id="log-it" type="button" class="btn btn-circle btn-xl" data-dismiss="modal" @click="save">
                             <span v-if="checked && isComplete" id="button-content"><b>LOG IT</b></span>
                             <span v-else id="button-content"><b>FIX IT</b></span>
-                        </button>
-                       
-                            
+                        </button>     
                     </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@
                     <div class="modal-header">
                             <h3 class="modal-title" id="exampleModalLongTitle">{{log.title}}</h3>
                             <button type="button" class="close">
-                            <router-link :to="'/Log'"><i class="fas fa-times"></i></router-link>
+                            <router-link :to="'/Log'"><i class="fas inner-fas fa-times"></i></router-link>
                             </button>
                     </div>
                     <div id="show-detail-modal-body" class="modal-body">
@@ -50,8 +50,6 @@ export default {
 
     name:'EditLog',
 
-    //props:['logId','logUser','logTitle','logType','logDescription','logDate'],
-
     data(){
         return{
             log:{domain_id:'', user:'', title:'',type:'',description:''},
@@ -76,7 +74,7 @@ export default {
                 Axios.get(uri).then((response) => {
                 this.log = response.data;
             });
-        },
+    },
 
 }
 </script>

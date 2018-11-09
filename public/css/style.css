@@ -15,7 +15,7 @@ body{
 }
 
 .nav-link{
-    font-size: 30px;
+    font-size: 20px;
     color:black;
     display: inline!important;
 }
@@ -340,25 +340,25 @@ tr{
  }
 
  .edit-detail-window {
-    width: 40vw;
+    width: 100%;
     height: 54vh;
     background-color: white;
     z-index: 400;
     position: absolute;
     border-radius: 10px;
-    top: 19%;
-    left: 30%;
+    top: 17%;
+    left: 0;
     padding: 30px;
+    margin: 0 auto;
 }
 
  #overlay {
-    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     z-index: 998;
-    background: rgba(0, 0, 0, 0.4);
+    background: white;
   }
 
   #show-detail-modal-body{
@@ -373,7 +373,10 @@ tr{
     text-align: left;
 }
 
-
+.inner-fas{
+    padding-top: 5px!important;
+    padding-bottom: 5px!important;
+}
 
 /* MEDIA QUERIES */
 

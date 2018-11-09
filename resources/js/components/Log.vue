@@ -20,9 +20,8 @@
                     <tr class="left-align">
                         <th class="">Log</th>
                         <th class="">User</th>
-                        <th></th>
                         <th class="center-align" style="text-align:right">Date</th>
-
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -46,7 +45,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Create new Log</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fas fa-times"></i>
+                        <i class="fas inner-fas fa-times"></i>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -62,10 +61,12 @@
                                 <option value="11">blanchadstowncentre.ie</option>
                                 <option value="7">chathamandking.ie</option>
                                 <option value="5">clayfarm.ie</option>
+                                <option value="12">develogger.originate.ie</option>
                                 <option value="10">edenplaza.ie</option>
                                 <option value="6">hardwicke.ie</option>
                                 <option value="2">kennedywilsonresidential.ie</option>
-                                <option value="3">loulerie.ie</option>                              
+                                <option value="3">loulerie.ie</option>
+                                <option value="13">originate.ie</option>
                                 <option value="9">procert.ie</option>  
                             </select>
 
@@ -184,15 +185,6 @@ import EditLog from './EditLog.vue';
                 this.logModalOpen = true;
             },
 
-            openEdit(id,user,title,type,description,date){
-                this.logId = id;
-                this.logUser = user;
-                this.logTitle = title;
-                this.logType = type;
-                this.logDescription = description;
-                this.logDate = date;
-                this.editModalOpen = true;
-            },
 
             close(){
                 this.logModalOpen = false;
@@ -215,7 +207,6 @@ import EditLog from './EditLog.vue';
                         
                         }).catch((error) => this.errors = error.response.data.errors)
                 }
-
                     
             }
             
