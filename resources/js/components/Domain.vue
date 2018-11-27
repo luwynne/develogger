@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div class="form-group">
-                <!-- <input type="text" class="form-control" id="filter" placeholder="Filter the Domains">   -->
+                <br>
+                <p>New Domain</p>&nbsp;<i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#createDomain"></i>
                 <div v-if="isLoading" class="loading-image">
                     <img src="/develogger-app/public/img/dev-tick.gif" alt="">
                 </div>
@@ -29,7 +30,7 @@
 
         <log-show v-if="logModalOpen" :logDomainId="logDomainId" :logDomainName="logDomainName" :logDomainClient="logDomainClient" @closeRequest='close'></log-show>
     
-               <!-- Modal -->
+               <!-- This creates a new Log for an specific Domain -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -76,6 +77,32 @@
                         <button :disabled="!checked || !isComplete" id="log-it" type="button" class="btn btn-circle btn-xl" data-dismiss="modal" @click="save">
                             <span v-if="checked && isComplete" id="button-content"><b>LOG IT</b></span>
                             <span v-else id="button-content"><b>FIX IT</b></span>
+                        </button>     
+                    </div>
+                    </div>
+                </div>
+            </div> 
+
+            <!-- Modal for creating a new Domain -->
+            <div class="modal fade" id="createDomain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create new Domain</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                            <input v-model="domain.url" name="url" type="text" id="url" class="form-control" placeholder="URL">
+                                <br>
+                            <input v-model="domain.client" name="client" type="text" id="client" class="form-control" placeholder="Client">
+                            
+                    </div>
+                    <div class="modal-footer">
+                        <button id="create-modal" type="button" class="btn btn-circle btn-xl" data-dismiss="modal" @click="saveDomain">
+                            <span id="button-content"><b>CREATE</b></span>
                         </button>     
                     </div>
                     </div>
@@ -176,8 +203,24 @@ import Show from './Show.vue'
 
             close(){
                 this.logModalOpen = false;
-            }
+            },
 
+            saveDomain(){
+                
+                if(this.domain.client.length > 0 && this.domain.url.length > 0){
+                    this.isLoading = true;
+                    window.axios.post('/develogger-app/public/api/domain-new',this.domain).then((response) => {
+                        this.domains.push(response.data);
+                        this.domain.client = '';
+                        this.domain.url = '';
+
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 800);
+                    
+                    }).catch((error) => this.errors = error.response.data.errors);
+                }
+            }
             
         },
 
@@ -203,5 +246,26 @@ import Show from './Show.vue'
 
     
 </script>
+
+<style>
+
+    #create-modal{
+        width: 85px!important;
+        height: 85px!important;
+        font-size: 15px!important;
+        line-height: 1.33!important;
+        border-radius: 42px!important;
+    }
+
+    
+
+    .fa-times{
+        padding-top: 5px!important;
+        padding-bottom: 5px!important;
+    }
+    
+
+</style>
+
 
 

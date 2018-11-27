@@ -232,7 +232,7 @@ a{
  
 .openLeft{
     /* width: 0%; */
-    height: 80vh!important;
+    height: 100vh!important;
     background-color: #fefefe;
     z-index: 100;
     top: -8px;
@@ -376,6 +376,10 @@ tr{
 .inner-fas{
     padding-top: 5px!important;
     padding-bottom: 5px!important;
+}
+
+.form-group p, .form-group i{
+    display:inline;
 }
 
 /* MEDIA QUERIES */

@@ -16,6 +16,8 @@ Route::resource('/domains','DomainController',[
     'except'=>['edit','show','store']
 ]);
 
+Route::post('/domain-new','DomainController@addNewDomain');
+
 Route::post('/domains','DomainController@addNewDomainLog');
 
 Route::get('/domain-logs/{id}','DomainController@getLogsDomain');

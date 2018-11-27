@@ -8,7 +8,7 @@
         <div class="form-group">
                 <!-- <input type="text" class="form-control" id="filter" placeholder="Filter the Logs"> -->
                 <br>
-                <i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                <p>New Log</p>&nbsp;<i class="fas fa-plus jobs-page" data-toggle="modal" data-target="#exampleModalCenter"></i>
                 <div v-if="isLoading" class="loading-image">
                     <img src="/develogger-app/public/img/dev-tick.gif" alt="">
                 </div>
@@ -55,19 +55,7 @@
 
                             <select v-model="log.domain_id" id="type" class="form-control" name="type"><br>
                                 <option value="" disabled selected>Website</option>
-                                <option value="1">aerogen.com</option>
-                                <option value="4">ardsolus.ie</option>
-                                <option value="8">blacklionrealstate.fund</option>
-                                <option value="11">blanchadstowncentre.ie</option>
-                                <option value="7">chathamandking.ie</option>
-                                <option value="5">clayfarm.ie</option>
-                                <option value="12">develogger.originate.ie</option>
-                                <option value="10">edenplaza.ie</option>
-                                <option value="6">hardwicke.ie</option>
-                                <option value="2">kennedywilsonresidential.ie</option>
-                                <option value="3">loulerie.ie</option>
-                                <option value="13">originate.ie</option>
-                                <option value="9">procert.ie</option>  
+                                 <option v-for="domain in domains" :key="domain.id" :domain="domain.id" :value="`${domain.id}`">{{domain.url}}</option>
                             </select>
 
                             <br>
@@ -114,6 +102,7 @@ import moment from 'moment';
 import ShowDetail from './ShowDetail.vue';
 import EditLog from './EditLog.vue';
 
+
     export default {
 
         name:'Log',
@@ -128,8 +117,10 @@ import EditLog from './EditLog.vue';
                 tell:false,
                 logs: [],
                 log: {id:'', domain_id:'', title: '', type: '', description: ''},
+                domains:[],
+                domain:{url:'', id:'', url:'', client:''},
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                errors:{},
+                errors:{}, 
 
                 //passing those variables to ShowDetails component
                 logId:'',
@@ -143,7 +134,7 @@ import EditLog from './EditLog.vue';
 
         methods:{
 
-            getLogs(){
+            getLogs(){ //gets all the logs as soon as the component is loaded
                 window.axios.get('/develogger-app/public/api/logs').then(({data})=>{
                     data.forEach(log =>{
                         this.logs.push(log)
@@ -153,17 +144,19 @@ import EditLog from './EditLog.vue';
 
             moment,
 
-            save(){
+            save(){ //creates the new log
                 this.isLoading = true;
                 if(this.log.title.length > 0 && this.log.domain_id.length > 0 && this.log.type.length > 0 && this.log.description.length > 0){
 
                     window.axios.post('/develogger-app/public/api/logs',this.log).then((response) => {
                         this.logs.push(response.data)
+                        this.log.domain.url = '';
                         this.log.domain_id = '';
                         this.log.title = '';
                         this.log.type = '';
                         this.log.description = '';
                         this.checked = false;
+
 
                         setTimeout(() => {
                             this.isLoading = false;
@@ -175,7 +168,7 @@ import EditLog from './EditLog.vue';
                 
             },
 
-            openLogs(id,user,title,type,description,date){
+            openLogs(id,user,title,type,description,date){ //open log information
                 this.logId = id;
                 this.logUser = user;
                 this.logTitle = title;
@@ -186,12 +179,12 @@ import EditLog from './EditLog.vue';
             },
 
 
-            close(){
+            close(){ //closes modal
                 this.logModalOpen = false;
                 this.editModalOpen = false;
             },
 
-            deleteLog(key,id){
+            deleteLog(key,id){ //this deletes the log
 
                 if(confirm("Are you sure you want to delete?")){
                     this.isLoading = true;
@@ -208,15 +201,24 @@ import EditLog from './EditLog.vue';
                         }).catch((error) => this.errors = error.response.data.errors)
                 }
                     
+            },
+
+            getAllDomains(){ //this function brings the domains to the select drop down list in order to create a new log as soon as the component is loaded
+                window.axios.get('/develogger-app/public/api/domains').then(({data})=>{
+                    data.forEach(domain =>{
+                        this.domains.push(domain)
+                    });
+                });
             }
             
         },
 
-        created(){
+        created(){ //load those functions as soon as the component is loaded
             this.getLogs();
+            this.getAllDomains();
         },
 
-        computed: {
+        computed: { //processing real live. This is used to validate the modal that creates a new log
             isComplete () {
                 return this.log.title && this.log.domain_id && this.log.type && this.log.description;
             }

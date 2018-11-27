@@ -13,8 +13,18 @@ class DomainController extends Controller
     
     public function index(){
 
-        return response(Domain::all()->jsonSerialize(), Response::HTTP_OK);
+        return response(Domain::orderBy('url', 'ASC')->get()->jsonSerialize(), Response::HTTP_OK);
         
+    }
+
+    public function addNewDomain(Request $request){
+
+        $domain = new Domain();
+        $domain->url = $request->url;
+        $domain->client = $request->client;
+        $domain->save();
+        return response($domain->jsonSerialize(),Response::HTTP_CREATED);
+
     }
 
     public function addNewDomainLog(Request $request){

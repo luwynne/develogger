@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Log;
+use App\Domain;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class LogController extends Controller
     
     public function index(){
 
-        $log = Log::orderBy('id', 'DESC')->get();
+        $log = Log::orderBy('id', 'DESC')->with('domain')->get();
 
         return response($log->jsonSerialize(), Response::HTTP_OK);
         
