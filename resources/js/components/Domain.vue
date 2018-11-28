@@ -52,9 +52,9 @@
                                 <option value="" disabled selected>Type</option>
                                 <option>Client Update</option>
                                 <option>Dev Update</option>
-                                <option>Bug</option>
-                                <option>New Job</option>
+                                <option>Bug Fix</option>
                                 <option>Style Fix</option>
+                                <option>New Website</option>
                             </select>
 
                             <br>

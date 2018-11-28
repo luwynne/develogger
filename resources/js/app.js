@@ -7,6 +7,7 @@ let App = require('./components/App.vue');
 let Domain = require('./components/Domain.vue');
 let Log = require('./components/Log.vue');
 let EditLog = require('./components/EditLog.vue');
+let AddLog = require('./components/AddLog.vue');
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,11 @@ const routes = [
       path: '/edit-log/:id',
       component: EditLog
     },
+    {
+      name: 'AddLog',
+      path: '/addlog',
+      component: AddLog
+    },
 
   ];
 
@@ -31,5 +37,5 @@ const routes = [
 const app = new Vue({
     el: '#app',
     router: router,
-    components:{App,Domain,Log,EditLog}
+    components:{App,Domain,Log,EditLog,AddLog}
 });

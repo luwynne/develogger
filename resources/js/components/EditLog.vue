@@ -20,8 +20,9 @@
                                 <option value="" disabled selected>Type</option>
                                 <option>Client Update</option>
                                 <option>Dev Update</option>
-                                <option>Bug</option>
+                                <option>Bug Fix</option>
                                 <option>Style Fix</option>
+                                <option>New Website</option>
                         </select>
 
                         <br>
